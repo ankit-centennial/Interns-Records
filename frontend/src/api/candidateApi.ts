@@ -15,3 +15,7 @@ export const candidateGetApi = async ():Promise<Candidate[]> => {
   const res = await axios.get(`${API_URL}/candidate`)
   return res.data
 }
+
+export const candidateDeleteApi = async (id:string) => {
+  return axios.delete(`${API_URL}/candidate/${id}`)
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { candidateGetApi } from "../api/candidateApi";
+import { candidateDeleteApi, candidateGetApi } from "../api/candidateApi";
 import type { Candidate } from "../types/candidate";
 
 const AllCandidate = () => {
@@ -15,6 +15,19 @@ const AllCandidate = () => {
     };
     fetchCandidate();
   }, []);
+
+  const handleDelete = async (id:string): Promise<void> => {
+    try {
+      const res = await candidateDeleteApi(id)
+      alert(res.data.message);
+
+      const newCandidates = candidates.filter((candidate)=> candidate._id != id)
+      setCandidates(newCandidates)
+    } catch (error: any) {
+      alert(error.response?.data?.error);
+      
+    }
+  }
 
   return (
     <div className="p-6  mt-5 lg:mt-10 overflow-x-auto">
@@ -64,7 +77,9 @@ const AllCandidate = () => {
                     <button className="px-3 py-2 bg-green-600 rounded-lg">
                       Edit
                     </button>
-                    <button className="px-3 py-2 bg-red-500 rounded-lg">
+                    <button className="px-3 py-2 bg-red-500 rounded-lg"
+                    onClick={()=>handleDelete(candidate._id)}
+                    >
                       Delete
                     </button>
                   </div>
