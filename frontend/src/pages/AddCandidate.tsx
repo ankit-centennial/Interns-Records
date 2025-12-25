@@ -28,21 +28,21 @@ const AddCandidate = () => {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      const res = await candidateAddApi(formData);
-      alert(res.data.message);
+      const data = await candidateAddApi(formData);
+      alert(data.message);
       navigate("/all-candidate");
     } catch (error: any) {
       alert(error.response?.data?.error);
     }
   };
   return (
-    <div className="flex flex-col bg-white shadow-xl px-10 py-10 rounded-2xl my-10">
+    <div className="flex flex-col bg-white shadow-xl px-10 py-10 rounded-2xl my-10 w-full max-w-4xl">
       <div className="text-center pb-6">
         <h2 className="text-3xl font-bold">Add Candidate</h2>
       </div>
-      <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
-          <label>Name</label>
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">Name</label>
           <input
             required
             type="text"
@@ -55,7 +55,7 @@ const AddCandidate = () => {
         </div>
 
         <div className="flex flex-col  gap-2">
-          <label>Email</label>
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">Email</label>
           <input
             required
             type="email"
@@ -68,7 +68,7 @@ const AddCandidate = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Phone</label>
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">Phone</label>
           <input
             required
             type="tel"
@@ -80,7 +80,7 @@ const AddCandidate = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Status</label>
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">Status</label>
           <select
             required
             name="status"
@@ -97,7 +97,7 @@ const AddCandidate = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Joining Date</label>
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">Joining Date</label>
           <input
             required
             type="date"
@@ -109,7 +109,7 @@ const AddCandidate = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Duration</label>
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">Duration</label>
           <input
             required
             type="text"
@@ -120,7 +120,7 @@ const AddCandidate = () => {
             className="border p-2 rounded "
           />
         </div>
-        <div className="w-full flex justify-center lg:ml-26 mt-4">
+        <div className="w-full flex justify-center lg:ml-54 mt-4">
           <button
             type="submit"
             className="bg-cyan-600 px-6 py-2 rounded-lg text-white text-lg hover:cursor-pointer hover:bg-cyan-500"

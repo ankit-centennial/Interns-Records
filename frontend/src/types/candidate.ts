@@ -27,3 +27,7 @@ export interface Candidate {
   joiningDate: string;
   duration: string;
 }
+
+export interface MessageResponse {
+  message: string
+}

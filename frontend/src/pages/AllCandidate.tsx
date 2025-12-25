@@ -16,21 +16,22 @@ const AllCandidate = () => {
     fetchCandidate();
   }, []);
 
-  const handleDelete = async (id:string): Promise<void> => {
+  const handleDelete = async (id: string): Promise<void> => {
     try {
-      const res = await candidateDeleteApi(id)
-      alert(res.data.message);
+      const data = await candidateDeleteApi(id);
+      alert(data.message);
 
-      const newCandidates = candidates.filter((candidate)=> candidate._id != id)
-      setCandidates(newCandidates)
+      const newCandidates = candidates.filter(
+        (candidate) => candidate._id != id
+      );
+      setCandidates(newCandidates);
     } catch (error: any) {
       alert(error.response?.data?.error);
-      
     }
-  }
+  };
 
   return (
-    <div className="p-6  mt-5 lg:mt-10 overflow-x-auto">
+    <div className="p-6  mt-5 lg:mt-10 overflow-x-auto w-full max-w-6xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <h2 className="text-xl font-semibold text-gray-800">All Candidates</h2>
         <input
@@ -58,34 +59,46 @@ const AllCandidate = () => {
           </thead>
 
           <tbody>
-            {candidates.map((candidate) => (
-              <tr key={candidate._id} className="border-b hover:bg-gray-50">
-                <td className="p-3">{candidate.name}</td>
-                <td className="p-3">{candidate.email}</td>
-                <td className="p-3">{candidate.phone}</td>
-                <td className="p-3">{candidate.status}</td>
-                <td className="p-3">
-                  {new Date(candidate.joiningDate).toLocaleDateString("en-Us", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </td>
-                <td className="p-3">{candidate.duration}</td>
-                <td className="p-3">
-                  <div className="flex gap-2">
-                    <button className="px-3 py-2 bg-green-600 rounded-lg">
-                      Edit
-                    </button>
-                    <button className="px-3 py-2 bg-red-500 rounded-lg"
-                    onClick={()=>handleDelete(candidate._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+            {candidates.length > 0 ? (
+              candidates.map((candidate) => (
+                <tr key={candidate._id} className="border-b hover:bg-gray-50">
+                  <td className="p-3">{candidate.name}</td>
+                  <td className="p-3">{candidate.email}</td>
+                  <td className="p-3">{candidate.phone}</td>
+                  <td className="p-3">{candidate.status}</td>
+                  <td className="p-3">
+                    {new Date(candidate.joiningDate).toLocaleDateString(
+                      "en-Us",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )}
+                  </td>
+                  <td className="p-3">{candidate.duration}</td>
+                  <td className="p-3">
+                    <div className="flex gap-3 justify-around">
+                      <button className="px-3 py-2 bg-green-600 rounded-lg">
+                        Edit
+                      </button>
+                      <button
+                        className="px-3 py-2 bg-red-500 rounded-lg hover:cursor-pointer hover:bg-red-400"
+                        onClick={() => handleDelete(candidate._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="text-center p-3 text-gray-500">
+                  No candidates found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
