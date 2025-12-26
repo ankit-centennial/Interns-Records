@@ -20,7 +20,7 @@ const AllCandidate = () => {
     const fetchCandidate = async (): Promise<void> => {
       try {
         const data = await candidateGetApi(page, limit);
-        setCandidates(data.candidate);
+        setCandidates(data.candidate || []);
         setPagination(data.pagination);
       } catch (error) {
         console.error("Error fetching candidate", error);
