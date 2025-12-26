@@ -30,7 +30,7 @@ const AllCandidate = () => {
       }
     };
     fetchCandidate();
-  }, [page]);
+  }, [page,limit]);
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
@@ -75,7 +75,7 @@ const AllCandidate = () => {
           </thead>
 
           <tbody>
-            {candidates.length > 0 ? (
+            {candidates?.length > 0 ? (
               candidates.map((candidate) => (
                 <tr key={candidate._id} className="border-b hover:bg-gray-50">
                   <td className="p-3">{candidate.name}</td>
