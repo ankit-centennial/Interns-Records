@@ -1,5 +1,8 @@
 import axios from "axios";
-import type { CandidateListResponse, CandidatePayload, Pagination } from "../types/candidate";
+import type {
+  CandidateListResponse,
+  CandidatePayload,
+} from "../types/candidate";
 import type { Candidate } from "../types/candidate";
 import type { MessageResponse } from "../types/candidate";
 
