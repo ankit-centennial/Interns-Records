@@ -17,7 +17,7 @@ export interface CandidatePayload {
 }
 
 export interface Candidate {
-  _id: string; 
+  _id: string;
   createdAt?: string;
   updatedAt?: string;
   name: string;
@@ -29,5 +29,17 @@ export interface Candidate {
 }
 
 export interface MessageResponse {
-  message: string
+  message: string;
+}
+
+export interface Pagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface CandidateListResponse {
+  candidate: Candidate[];
+  pagination: Pagination;
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CandidatePayload } from "../types/candidate";
+import type { CandidateListResponse, CandidatePayload, Pagination } from "../types/candidate";
 import type { Candidate } from "../types/candidate";
 import type { MessageResponse } from "../types/candidate";
 
@@ -12,8 +12,13 @@ export const candidateAddApi = async function (
   return res.data;
 };
 
-export const candidateGetApi = async (): Promise<Candidate[]> => {
-  const res = await axios.get(`${API_URL}/candidate`);
+export const candidateGetApi = async (
+  page: number = 1,
+  limit: number = 5
+): Promise<CandidateListResponse> => {
+  const res = await axios.get(`${API_URL}/candidate`, {
+    params: { page, limit },
+  });
   return res.data;
 };
 
@@ -24,7 +29,10 @@ export const candidateDeleteApi = async (
   return res.data;
 };
 
-export const candidateEditApi = async (id:string, data:CandidatePayload):Promise<Candidate & MessageResponse> => {
-  const res = await axios.put(`${API_URL}/candidate/${id}`,data);
-  return res.data
-}
+export const candidateEditApi = async (
+  id: string,
+  data: CandidatePayload
+): Promise<Candidate & MessageResponse> => {
+  const res = await axios.put(`${API_URL}/candidate/${id}`, data);
+  return res.data;
+};

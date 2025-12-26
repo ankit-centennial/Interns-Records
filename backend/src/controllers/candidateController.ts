@@ -40,12 +40,29 @@ export const addCandidateController = async (
 
 //Get Candidate
 export const getCandidateController = async (
-  _req: Request,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const candidate = await Candidate.find();
-    res.status(200).json(candidate);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 5;
+
+    //Pagination
+    const candidate = await Candidate.find()
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    const total = await Candidate.countDocuments();
+
+    res.status(200).json({
+      candidate,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / limit),
+      },
+    });
   } catch (error) {
     res.status(500).json({
       message: "something went wrong",

@@ -1,24 +1,33 @@
 import { useEffect, useState } from "react";
 import { candidateDeleteApi, candidateGetApi } from "../api/candidateApi";
-import type { Candidate } from "../types/candidate";
+import { type Pagination, type Candidate } from "../types/candidate";
 import { useNavigate } from "react-router-dom";
 
 const AllCandidate = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [limit] = useState<number>(5);
+  const [pagination, setPagination] = useState<Pagination>({
+    page: 1,
+    limit: 5,
+    totalPages: 1,
+    total: 0,
+  });
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCandidate = async (): Promise<void> => {
       try {
-        const data = await candidateGetApi();
-        setCandidates(data);
+        const data = await candidateGetApi(page, limit);
+        setCandidates(data.candidate);
+        setPagination(data.pagination);
       } catch (error) {
         console.error("Error fetching candidate", error);
       }
     };
     fetchCandidate();
-  }, []);
+  }, [page]);
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
@@ -35,7 +44,7 @@ const AllCandidate = () => {
   };
 
   return (
-    <div className="p-4 overflow-x-auto w-full max-w-6xl bg-white shadow-lg rounded-lg  flex flex-col my-2">
+    <div className="p-4 overflow-x-auto w-full max-w-6xl bg-white shadow-lg rounded-lg  flex flex-col my-2 overflow-y-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <h2 className="text-xl font-semibold text-gray-800">All Candidates</h2>
         <input
@@ -110,6 +119,38 @@ const AllCandidate = () => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center itmes-center mt-4 space-x-2">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((p) => p - 1)}
+          className="px-3 py-1 bg-gray-200 rounded-lg disabled:opacity-50"
+        >
+          Prev
+        </button>
+
+        {Array.from({ length: pagination.totalPages || 1 }, (_, i) => (
+          <button
+            key={i + 1}
+            onClick={() => setPage(i + 1)}
+            className={`px-3 py-1 rounded-lg ${
+              page === i + 1
+                ? "bg-cyan-600 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        <button
+          disabled={page === pagination.totalPages}
+          onClick={() => setPage((p) => p + 1)}
+          className="bg-gray-200 rounded-lg disabled:opacity-50 px-3 py-1"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
