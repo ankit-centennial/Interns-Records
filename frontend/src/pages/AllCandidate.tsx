@@ -8,10 +8,10 @@ const AllCandidate = () => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(5);
   const [pagination, setPagination] = useState<Pagination>({
+    total: 0,
     page: 1,
     limit: 5,
     totalPages: 1,
-    total: 0,
   });
 
   const navigate = useNavigate();
