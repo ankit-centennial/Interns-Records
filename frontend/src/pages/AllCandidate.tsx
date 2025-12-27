@@ -155,7 +155,7 @@ const AllCandidate = () => {
         ))}
 
         <button
-          disabled={page === pagination.totalPages}
+          disabled={page === totalPages}
           onClick={() => setPage((p) => p + 1)}
           className="bg-gray-200 rounded-lg disabled:opacity-50 px-3 py-1"
         >
