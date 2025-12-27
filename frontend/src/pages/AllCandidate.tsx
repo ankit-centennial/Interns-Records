@@ -21,7 +21,7 @@ const AllCandidate = () => {
       try {
         const data = await candidateGetApi(page, limit);
         setCandidates(data.candidate || []);
-        
+
         setPagination((prev) => ({
           ...prev,
           ...(data.pagination || {}),
@@ -31,7 +31,7 @@ const AllCandidate = () => {
       }
     };
     fetchCandidate();
-  }, [page,limit]);
+  }, [page, limit]);
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
@@ -84,14 +84,12 @@ const AllCandidate = () => {
                   <td className="p-3">{candidate.phone}</td>
                   <td className="p-3">{candidate.status}</td>
                   <td className="p-3">
-                    {new Date(candidate.joiningDate).toLocaleDateString(
-                      "en-Us",
-                      {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      }
-                    )}
+                    {candidate.joiningDate &&
+                    !isNaN(Date.parse(candidate.joiningDate))
+                      ? new Date(candidate.joiningDate).toLocaleDateString(
+                          "en-US"
+                        )
+                      : "N/A"}
                   </td>
                   <td className="p-3">{candidate.duration}</td>
                   <td className="p-3">
