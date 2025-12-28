@@ -3,15 +3,11 @@ import dotenv from "dotenv";
 import connectDB from "./config/database";
 import cors from "cors";
 dotenv.config();
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 import candidateRoute from "./routes/candidateRoute";
