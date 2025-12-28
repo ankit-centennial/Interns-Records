@@ -39,36 +39,23 @@ export const addCandidateController = async (
 };
 
 //Get Candidate
-export const getCandidateController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const page = Math.max(Number(req.query.page) || 1, 1);
-    const limit = Math.max(Number(req.query.limit) || 5, 1);
+export const getCandidateController = async (req: Request, res: Response) => {
+  const page = Math.max(Number(req.query.page) || 1, 1);
+  const limit = Math.max(Number(req.query.limit) || 5, 1);
+  const skip = (page - 1) * limit;
 
-    const skip = (page - 1) * limit;
+  const candidate = await Candidate.find().skip(skip).limit(limit);
+  const total = await Candidate.countDocuments();
 
-    //Pagination
-    const candidate = await Candidate.find().skip(skip).limit(Number(limit));
-
-    const total = await Candidate.countDocuments();
-
-    res.status(200).json({
-      candidate,
-      pagination: {
-        total,
-        page: Number(page),
-        limit: Number(limit),
-        totalPages: Math.ceil(total / limit),
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "something went wrong",
-      error: (error as Error).message,
-    });
-  }
+  res.status(200).json({
+    candidate,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  });
 };
 
 //Delete Candidate
