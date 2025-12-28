@@ -26,6 +26,7 @@ const AllCandidate = () => {
       try {
         const data = await candidateGetApi(page, limit);
         setCandidates(data.candidate || []);
+console.log(data.candidate);
 
         setPagination({
           page: Number(data.pagination?.page) || 1,
@@ -33,6 +34,8 @@ const AllCandidate = () => {
           totalPages: Number(data.pagination?.totalPages) || 1,
           total: Number(data.pagination?.total) || 0,
         });
+        console.log(data.pagination);
+        
       } catch (error) {
         console.error("Error fetching candidate", error);
       }

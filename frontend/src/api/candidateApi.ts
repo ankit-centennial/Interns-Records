@@ -20,7 +20,7 @@ export const candidateGetApi = async (
   limit: number = 5
 ): Promise<CandidateListResponse> => {
   const res = await axios.get(`${API_URL}/candidate`, {
-    params: { page, limit },
+    params: {page, limit}
   });
   return res.data;
 };
