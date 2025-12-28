@@ -47,17 +47,21 @@ const addCandidateController = (req, res) => __awaiter(void 0, void 0, void 0, f
 });
 exports.addCandidateController = addCandidateController;
 //Get Candidate
-const getCandidateController = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const candidate = yield candidate_1.default.find();
-        res.status(200).json(candidate);
-    }
-    catch (error) {
-        res.status(500).json({
-            message: "something went wrong",
-            error: error.message,
-        });
-    }
+const getCandidateController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const page = Math.max(Number(req.query.page) || 1, 1);
+    const limit = Math.max(Number(req.query.limit) || 5, 1);
+    const skip = (page - 1) * limit;
+    const candidate = yield candidate_1.default.find().skip(skip).limit(limit);
+    const total = yield candidate_1.default.countDocuments();
+    res.status(200).json({
+        candidate,
+        pagination: {
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+        },
+    });
 });
 exports.getCandidateController = getCandidateController;
 //Delete Candidate
