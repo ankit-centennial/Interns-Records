@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { candidateDeleteApi, candidateGetApi } from "../api/candidateApi";
 import { type Pagination, type Candidate } from "../types/candidate";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const AllCandidate = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -13,6 +14,8 @@ const AllCandidate = () => {
     limit: 5,
     totalPages: 1,
   });
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const totalPages =
     Number.isInteger(pagination.totalPages) && pagination.totalPages > 0
@@ -38,6 +41,8 @@ const AllCandidate = () => {
         });
       } catch (error) {
         console.error("Error fetching candidate", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchCandidate();
@@ -56,6 +61,10 @@ const AllCandidate = () => {
       alert(error.response?.data?.error);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-4 overflow-x-auto w-full max-w-6xl bg-white shadow-lg rounded-lg  flex flex-col my-2 overflow-y-auto">
