@@ -11,6 +11,8 @@ const AddCandidate = () => {
     status: "",
     joiningDate: "",
     duration: "",
+    jobBoard: "",
+    jobPostedDate: "",
   });
 
   const navigate = useNavigate();
@@ -50,7 +52,7 @@ const AddCandidate = () => {
     }
   };
   return (
-    <div className="flex flex-col bg-white shadow-xl px-10 py-4 rounded-2xl my-10 w-full max-w-4xl">
+    <div className="flex flex-col bg-white shadow-xl px-10 py-4 rounded-2xl  w-full max-w-4xl my-10">
       <div className="text-center pb-6">
         <h2 className="text-3xl font-bold">
           {isEditMode ? "Edit Candidate" : "Add Candidate"}
@@ -148,6 +150,36 @@ const AddCandidate = () => {
             className="border p-2 rounded "
           />
         </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
+            Job board
+          </label>
+          <input
+            required
+            type="text"
+            placeholder="enter job board name"
+            name="jobBoard"
+            value={formData.jobBoard}
+            onChange={handleChange}
+            className="border p-2 rounded "
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
+            Job posted Date
+          </label>
+          <input
+            required
+            type="date"
+            name="jobPostedDate"
+            value={formData.jobPostedDate.slice(0, 10)}
+            onChange={handleChange}
+            className="border p-2 rounded "
+          />
+        </div>
+
         <div className="w-full flex justify-center lg:ml-54 mt-4">
           <button
             type="submit"
