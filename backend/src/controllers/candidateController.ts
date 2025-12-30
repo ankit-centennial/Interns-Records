@@ -7,9 +7,27 @@ export const addCandidateController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { name, email, phone, status, joiningDate, duration } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      status,
+      joiningDate,
+      duration,
+      jobBoard,
+      jobPostedDate,
+    } = req.body;
 
-    if (!name || !email || !phone || !status || !joiningDate || !duration) {
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !status ||
+      !joiningDate ||
+      !duration ||
+      !jobBoard ||
+      !jobPostedDate
+    ) {
       res.status(400).json({ message: "All fields are required" });
       return;
     }
@@ -21,6 +39,8 @@ export const addCandidateController = async (
       status,
       joiningDate,
       duration,
+      jobBoard,
+      jobPostedDate,
     });
 
     res
@@ -89,9 +109,27 @@ export const updateCandidateController = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { name, email, phone, status, joiningDate, duration } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      status,
+      joiningDate,
+      duration,
+      jobBoard,
+      jobPostedDate,
+    } = req.body;
 
-    const candidate = { name, email, phone, status, joiningDate, duration };
+    const candidate = {
+      name,
+      email,
+      phone,
+      status,
+      joiningDate,
+      duration,
+      jobBoard,
+      jobPostedDate,
+    };
 
     const updateCandidate = await Candidate.findByIdAndUpdate(id, candidate, {
       new: true,

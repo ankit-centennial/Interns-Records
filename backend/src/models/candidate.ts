@@ -14,6 +14,8 @@ interface ICandidate {
   status: CandidateStatus;
   joiningDate: Date;
   duration: string;
+  jobBoard: string;
+  jobPostedDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -45,6 +47,14 @@ const candidateSchema = new Schema<ICandidate>(
     },
     duration: {
       type: String,
+      required: true,
+    },
+    jobBoard: {
+      type: String,
+      required: true,
+    },
+    jobPostedDate: {
+      type: Date,
       required: true,
     },
   },
