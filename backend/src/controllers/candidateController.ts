@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Candidate from "../models/candidate";
+import { error } from "console";
 
 // Add Candidate
 export const addCandidateController = async (
@@ -32,7 +33,14 @@ export const addCandidateController = async (
       !appliedDate ||
       !jobPostedBy
     ) {
-      res.status(400).json({ message: "All fields are required" });
+      res.status(400).json({ error: "All fields are required" });
+      return;
+    }
+
+    //exist candidate
+    const existCandidate = await Candidate.findOne({ email: email });
+    if (existCandidate) {
+      res.status(400).json({ error: "Candidate already exists" });
       return;
     }
 
