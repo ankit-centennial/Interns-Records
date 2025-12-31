@@ -17,10 +17,11 @@ export const candidateAddApi = async function (
 
 export const candidateGetApi = async (
   page: number = 1,
-  limit: number = 5
+  limit: number = 5,
+  search: string = ""
 ): Promise<CandidateListResponse> => {
   const res = await axios.get(`${API_URL}/candidate`, {
-    params: {page, limit}
+    params: { page, limit, search },
   });
   return res.data;
 };

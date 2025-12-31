@@ -8,11 +8,13 @@ const AllCandidate = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(5);
+  const [search, setSearch] = useState<string>("");
   const [pagination, setPagination] = useState<Pagination>({
     total: 0,
     page: 1,
     limit: 5,
     totalPages: 1,
+    search: "",
   });
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,18 +29,20 @@ const AllCandidate = () => {
   useEffect(() => {
     const fetchCandidate = async (): Promise<void> => {
       try {
-        const data = await candidateGetApi(page, limit);
+        const data = await candidateGetApi(page, limit, search);
 
         const candidates = data?.candidate || [];
         const pagination = data?.pagination || {};
 
         setCandidates(candidates);
-        setPagination({
+        setPagination((prev) => ({
+          ...prev,
           page: Number(pagination?.page) || 1,
           limit: Number(pagination?.limit) || limit,
           totalPages: Number(pagination?.totalPages) || 1,
           total: Number(pagination?.total) || 0,
-        });
+          search,
+        }));
       } catch (error) {
         console.error("Error fetching candidate", error);
       } finally {
@@ -46,7 +50,7 @@ const AllCandidate = () => {
       }
     };
     fetchCandidate();
-  }, [page]);
+  }, [page, search]);
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
@@ -68,7 +72,7 @@ const AllCandidate = () => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center px-4">
-      <div className="p-4 overflow-x-auto w-full  bg-white shadow-lg rounded-lg  flex flex-col my-4 overflow-y-auto">
+      <div className="p-4 overflow-x-auto w-full  bg-white shadow-lg rounded-lg  flex flex-col my-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
           <h2 className="text-xl font-semibold text-gray-800">
             All Candidates
@@ -76,8 +80,8 @@ const AllCandidate = () => {
           <input
             type="text"
             placeholder="Search by name or email..."
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
           />
         </div>
