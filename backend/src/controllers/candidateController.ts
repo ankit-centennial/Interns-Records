@@ -78,10 +78,21 @@ export const addCandidateController = async (
 export const getCandidateController = async (req: Request, res: Response) => {
   const page = Math.max(Number(req.query.page) || 1, 1);
   const limit = Math.max(Number(req.query.limit) || 5, 1);
+  const search = req.query.search || "";
+
+  let filter = {};
+  if (search) {
+    filter = {
+      $or: [
+        { name: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ],
+    };
+  }
   const skip = (page - 1) * limit;
 
-  const candidate = await Candidate.find().skip(skip).limit(limit);
-  const total = await Candidate.countDocuments();
+  const candidate = await Candidate.find(filter).skip(skip).limit(limit);
+  const total = await Candidate.countDocuments(filter);
 
   res.status(200).json({
     candidate,
