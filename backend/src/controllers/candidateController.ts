@@ -38,7 +38,9 @@ export const addCandidateController = async (
     }
 
     //exist candidate
-    const existCandidate = await Candidate.findOne({ email: email });
+    const existCandidate = await Candidate.findOne({
+      $or: [{ email: email }, { phone: phone }],
+    });
     if (existCandidate) {
       res.status(400).json({ error: "Candidate already exists" });
       return;
