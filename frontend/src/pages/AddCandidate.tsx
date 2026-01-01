@@ -131,7 +131,7 @@ const AddCandidate = () => {
           <input
             type="date"
             name="joiningDate"
-            value={formData.joiningDate.slice(0, 10)}
+            value={formData.joiningDate?.slice(0, 10) || ""}
             onChange={handleChange}
             className="border p-2 rounded "
           />
