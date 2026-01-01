@@ -13,8 +13,8 @@ interface ICandidate {
   email: string;
   phone: string;
   status: CandidateStatus;
-  joiningDate: Date;
-  duration: string;
+  joiningDate?: Date;
+  duration?: string;
   jobBoard: string;
   jobPostedDate: Date;
   appliedDate: Date;
@@ -55,7 +55,6 @@ const candidateSchema = new Schema<ICandidate>(
     },
     duration: {
       type: String,
-      required: true,
     },
     jobBoard: {
       type: String,
