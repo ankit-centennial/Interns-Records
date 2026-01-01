@@ -4,7 +4,7 @@ export interface CandidateFormData {
   phone: string;
   status: string;
   joiningDate?: string;
-  duration: string;
+  duration?: string;
   jobBoard: string;
   jobPostedDate: string;
   appliedDate: string;
@@ -17,7 +17,7 @@ export interface CandidatePayload {
   phone: string;
   status: string;
   joiningDate?: string;
-  duration: string;
+  duration?: string;
   jobBoard: string;
   jobPostedDate: string;
   appliedDate: string;
@@ -33,7 +33,7 @@ export interface Candidate {
   phone: string;
   status: string;
   joiningDate?: string;
-  duration: string;
+  duration?: string;
   jobBoard: string;
   jobPostedDate: string;
   appliedDate: string;

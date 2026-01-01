@@ -125,7 +125,7 @@ const AllCandidate = () => {
                           )
                         : "N/A"}
                     </td>
-                    <td className="p-3">{candidate.duration}</td>
+                    <td className="p-3">{candidate.duration || "N/A"}</td>
                     <td className="p-3">{candidate.jobBoard}</td>
                     <td className="p-3">
                       {candidate.jobPostedDate &&

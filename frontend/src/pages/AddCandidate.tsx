@@ -143,11 +143,10 @@ const AddCandidate = () => {
             Duration
           </label>
           <input
-            required
             type="text"
             placeholder="1 month"
             name="duration"
-            value={formData.duration}
+            value={formData?.duration || ""}
             onChange={handleChange}
             className="border p-2 rounded "
           />
