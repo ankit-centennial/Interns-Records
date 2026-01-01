@@ -45,7 +45,6 @@ const candidateSchema = new Schema<ICandidate>(
     },
     joiningDate: {
       type: Date,
-      required: true,
     },
     duration: {
       type: String,

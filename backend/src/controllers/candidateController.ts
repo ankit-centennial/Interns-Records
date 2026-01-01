@@ -26,7 +26,6 @@ export const addCandidateController = async (
       !email ||
       !phone ||
       !status ||
-      !joiningDate ||
       !duration ||
       !jobBoard ||
       !jobPostedDate ||
