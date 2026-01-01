@@ -1,6 +1,7 @@
 import { model, Schema, Types } from "mongoose";
 
 type CandidateStatus =
+  | ""
   | "busy"
   | "interested"
   | "no response"
@@ -12,7 +13,7 @@ interface ICandidate {
   name: string;
   email: string;
   phone: string;
-  status: CandidateStatus;
+  status?: CandidateStatus;
   joiningDate?: Date;
   duration?: string;
   jobBoard: string;
@@ -42,13 +43,13 @@ const candidateSchema = new Schema<ICandidate>(
     status: {
       type: String,
       enum: [
+        "",
         "busy",
         "interested",
         "no response",
         "no incoming service",
         "rejected",
       ],
-      required: true,
     },
     joiningDate: {
       type: Date,
