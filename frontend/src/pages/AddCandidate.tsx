@@ -129,7 +129,6 @@ const AddCandidate = () => {
             Joining Date
           </label>
           <input
-            required
             type="date"
             name="joiningDate"
             value={formData.joiningDate.slice(0, 10)}
