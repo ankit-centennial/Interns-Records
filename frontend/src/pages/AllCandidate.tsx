@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { candidateDeleteApi, candidateGetApi } from "../api/candidateApi";
+import { candidateGetApi, candidateDeleteApi } from "../api/candidateApi";
 import { type Pagination, type Candidate } from "../types/candidate";
-import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
+import ReadOnlyRow from "../components/ReadOnlyRow";
+import EditableRow from "../components/EditableRow";
 
 const AllCandidate = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -16,6 +17,7 @@ const AllCandidate = () => {
     totalPages: 1,
     search: "",
   });
+  const [editCandidateId, setEditCandidateId] = useState<string | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -23,8 +25,6 @@ const AllCandidate = () => {
     Number.isInteger(pagination.totalPages) && pagination.totalPages > 0
       ? pagination.totalPages
       : 1;
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCandidate = async (): Promise<void> => {
@@ -66,6 +66,10 @@ const AllCandidate = () => {
     }
   };
 
+  const handleEditClick = (candidate: Candidate): void => {
+    setEditCandidateId(candidate._id);
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -88,96 +92,53 @@ const AllCandidate = () => {
 
         {/* Table */}
         <div className="bg-white rounded-lg">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-cyan-600 text-white">
-                <th className="p-3">Name</th>
-                <th className="p-3">Email</th>
-                <th className="p-3">Phone</th>
-                <th className="p-3">status</th>
-                <th className="p-3">Joining Date</th>
-                <th className="p-3">Duration</th>
-                <th className="p-3">Job Board</th>
-                <th className="p-3">Job Posted Date</th>
-                <th className="p-3">Posted By</th>
-                <th className="p-3">Applied Date</th>
-                <th className="p-3">Actions</th>
-              </tr>
-            </thead>
+          <form action="">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-cyan-600 text-white">
+                  <th className="p-3">Name</th>
+                  <th className="p-3">Email</th>
+                  <th className="p-3">Phone</th>
+                  <th className="p-3">status</th>
+                  <th className="p-3">Joining Date</th>
+                  <th className="p-3">Duration</th>
+                  <th className="p-3">Job Board</th>
+                  <th className="p-3">Job Posted Date</th>
+                  <th className="p-3">Posted By</th>
+                  <th className="p-3">Applied Date</th>
+                  <th className="p-3">Actions</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {candidates?.length > 0 ? (
-                candidates.map((candidate) => (
-                  <tr
-                    key={candidate._id}
-                    className="border-b hover:bg-gray-50 "
-                  >
-                    <td className="p-3">{candidate.name}</td>
-                    <td className="p-3">{candidate.email}</td>
-                    <td className="p-3">{candidate.phone}</td>
-                    <td className="p-3">{candidate?.status || "N/A"}</td>
-                    <td className="p-3">
-                      {candidate.joiningDate &&
-                      !isNaN(Date.parse(candidate.joiningDate))
-                        ? new Date(candidate.joiningDate).toLocaleDateString(
-                            "en-US",
-                            { year: "numeric", month: "long", day: "numeric" }
-                          )
-                        : "N/A"}
-                    </td>
-                    <td className="p-3">{candidate.duration || "N/A"}</td>
-                    <td className="p-3">{candidate.jobBoard}</td>
-                    <td className="p-3">
-                      {candidate.jobPostedDate &&
-                      !isNaN(Date.parse(candidate.jobPostedDate))
-                        ? new Date(candidate.jobPostedDate).toLocaleDateString(
-                            "en-US",
-                            { year: "numeric", month: "long", day: "numeric" }
-                          )
-                        : "N/A"}
-                    </td>
-
-                    <td className="p-3">{candidate.jobPostedBy}</td>
-
-                    <td className="p-3">
-                      {candidate.appliedDate &&
-                      !isNaN(Date.parse(candidate.appliedDate))
-                        ? new Date(candidate.appliedDate).toLocaleDateString(
-                            "en-US",
-                            { year: "numeric", month: "long", day: "numeric" }
-                          )
-                        : "N/A"}
-                    </td>
-
-                    <td className="p-3">
-                      <div className="flex gap-3 justify-around">
-                        <button
-                          className="px-3 py-2 bg-green-600 rounded-lg hover:cursor-pointer hover:bg-green-500"
-                          onClick={() =>
-                            navigate("/", { state: { candidates: candidate } })
-                          }
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="px-3 py-2 bg-red-500 rounded-lg hover:cursor-pointer hover:bg-red-400"
-                          onClick={() => handleDelete(candidate._id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
+              <tbody>
+                {candidates?.length > 0 ? (
+                  candidates.map((candidate) => (
+                    <>
+                      {editCandidateId === candidate._id ? (
+                        <EditableRow
+                          candidat={candidate}
+                          setEditCandidateId={setEditCandidateId}
+                        ></EditableRow>
+                      ) : (
+                        <ReadOnlyRow
+                          key={candidate._id}
+                          candidate={candidate}
+                          onDelete={handleDelete}
+                          onEdit={handleEditClick}
+                        ></ReadOnlyRow>
+                      )}
+                    </>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="text-center p-3 text-gray-500">
+                      No candidates found
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={7} className="text-center p-3 text-gray-500">
-                    No candidates found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </form>
         </div>
 
         {/* Pagination */}

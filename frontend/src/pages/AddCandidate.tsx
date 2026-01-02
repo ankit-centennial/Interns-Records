@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { type CandidateFormData } from "../types/candidate";
-import { candidateAddApi, candidateEditApi } from "../api/candidateApi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { candidateAddApi } from "../api/candidateApi";
+import { useNavigate } from "react-router-dom";
 
 const AddCandidate = () => {
   const [formData, setFormData] = useState<CandidateFormData>({
@@ -18,16 +18,7 @@ const AddCandidate = () => {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const isEditMode = location.state?.candidates || null;
-
-  useEffect(() => {
-    if (isEditMode) {
-      setFormData(isEditMode);
-    }
-  }, [isEditMode]);
-
+ 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -41,27 +32,24 @@ const AddCandidate = () => {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      if (isEditMode) {
-        const data = await candidateEditApi(isEditMode._id, formData);
-        alert(data.message);
-      } else {
-        const data = await candidateAddApi(formData);
-        alert(data.message);
-      }
+      const data = await candidateAddApi(formData);
+      alert(data.message);
+
       navigate("/all-candidate");
     } catch (error: any) {
       alert(error.response?.data?.error);
     }
   };
   return (
-    <div className="flex flex-col bg-white shadow-xl px-10 py-4 rounded-2xl  w-full max-w-4xl my-10">
+    <div className="flex flex-col bg-white shadow-xl px-10 py-4 rounded-2xl  w-full max-w-3xl my-10 justify-center items-center">
       <div className="text-center pb-6">
-        <h2 className="text-3xl font-bold">
-          {isEditMode ? "Edit Candidate" : "Add Candidate"}
-        </h2>
+        <h2 className="text-3xl font-bold">Add Candidate</h2>
       </div>
-      <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-6">
-        <div className="flex flex-col gap-2">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col  gap-4 w-full  max-w-xl "
+      >
+        <div className="flex flex-col">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Name
           </label>
@@ -76,7 +64,7 @@ const AddCandidate = () => {
           />
         </div>
 
-        <div className="flex flex-col  gap-2">
+        <div className="flex flex-col  ">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Email
           </label>
@@ -91,7 +79,7 @@ const AddCandidate = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col ">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Phone
           </label>
@@ -105,53 +93,8 @@ const AddCandidate = () => {
             className="border p-2 rounded "
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
-            Status
-          </label>
-          <select
-            name="status"
-            value={formData?.status || ""}
-            onChange={handleChange}
-            className="border p-2 rounded"
-          >
-            <option value="">Select Status</option>
-            <option value="interested">Interested</option>
-            <option value="busy">Busy</option>
-            <option value="no response">No Response</option>
-            <option value="no incoming service">No Incoming Service</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
-            Joining Date
-          </label>
-          <input
-            type="date"
-            name="joiningDate"
-            value={formData.joiningDate?.slice(0, 10) || ""}
-            onChange={handleChange}
-            className="border p-2 rounded "
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
-            Duration
-          </label>
-          <input
-            type="text"
-            placeholder="1 month"
-            name="duration"
-            value={formData?.duration || ""}
-            onChange={handleChange}
-            className="border p-2 rounded "
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col ">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Job board
           </label>
@@ -166,7 +109,7 @@ const AddCandidate = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col ">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Job posted Date
           </label>
@@ -180,7 +123,7 @@ const AddCandidate = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col ">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Applied Date
           </label>
@@ -194,7 +137,7 @@ const AddCandidate = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col ">
           <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
             Job Posted By
           </label>
@@ -209,12 +152,12 @@ const AddCandidate = () => {
           />
         </div>
 
-        <div className="w-full flex justify-center lg:ml-54 mt-4">
+        <div className="flex lg:mt-6 w-full justify-center">
           <button
             type="submit"
-            className="bg-cyan-600 px-6 py-2 rounded-lg text-white text-lg hover:cursor-pointer hover:bg-cyan-500"
+            className="bg-cyan-600 px-6 py-3  rounded-lg text-white text-lg hover:cursor-pointer hover:bg-cyan-500"
           >
-            {isEditMode ? "Edit" : "Add"}
+            Add
           </button>
         </div>
       </form>
