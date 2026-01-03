@@ -10,6 +10,8 @@ const AllCandidate = () => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(5);
   const [search, setSearch] = useState<string>("");
+  const [jobPostedFrom, setJobPostedFrom] = useState<string>("");
+
   const [pagination, setPagination] = useState<Pagination>({
     total: 0,
     page: 1,
@@ -29,7 +31,7 @@ const AllCandidate = () => {
   useEffect(() => {
     const fetchCandidate = async (): Promise<void> => {
       try {
-        const data = await candidateGetApi(page, limit, search);
+        const data = await candidateGetApi(page, limit, search, jobPostedFrom);
 
         const candidates = data?.candidate || [];
         const pagination = data?.pagination || {};
@@ -50,7 +52,7 @@ const AllCandidate = () => {
       }
     };
     fetchCandidate();
-  }, [page, search]);
+  }, [page, search, jobPostedFrom]);
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
@@ -81,13 +83,51 @@ const AllCandidate = () => {
           <h2 className="text-xl font-semibold text-gray-800">
             All Candidates
           </h2>
-          <input
-            type="text"
-            placeholder="Search by name or email..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-          />
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            {/* Search */}
+            <div className="flex flex-col">
+              <label className="text-sm text-gray-600 mb-1">Search</label>
+              <input
+                type="text"
+                placeholder="Name or Email"
+                value={search}
+                onChange={(e) => {
+                  setPage(1);
+                  setSearch(e.target.value);
+                }}
+                className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            {/* From Date */}
+            <div className="flex flex-col">
+              <label className="text-sm text-gray-600 mb-1">
+                Job Posted
+              </label>
+              <input
+                type="date"
+                value={jobPostedFrom}
+                onChange={(e) => {
+                  setPage(1);
+                  setJobPostedFrom(e.target.value);
+                }}
+                className="px-3 py-2 border rounded-lg"
+              />
+            </div>
+
+            {/* Reset */}
+            <button
+              onClick={() => {
+                setSearch("");
+                setJobPostedFrom("");
+                // setJobPostedTo("");
+                setPage(1);
+              }}
+              className="h-10.5 px-4 bg-gray-100 border rounded-lg text-sm hover:bg-gray-200"
+            >
+              Reset
+            </button>
+          </div>
         </div>
 
         {/* Table */}

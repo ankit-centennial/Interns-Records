@@ -18,10 +18,12 @@ export const candidateAddApi = async function (
 export const candidateGetApi = async (
   page: number = 1,
   limit: number = 5,
-  search: string = ""
+  search: string = "",
+  jobPostedFrom?: string,
+  jobPostedTo?: string
 ): Promise<CandidateListResponse> => {
   const res = await axios.get(`${API_URL}/candidate`, {
-    params: { page, limit, search },
+    params: { page, limit, search, jobPostedFrom, jobPostedTo },
   });
   return res.data;
 };

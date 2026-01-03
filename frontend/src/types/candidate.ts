@@ -9,7 +9,7 @@ export interface CandidateFormData {
   jobPostedDate: string;
   appliedDate: string;
   jobPostedBy: string;
-   offerLetterSent: string;
+  offerLetterSent: string;
   offerLetterAccepted: string;
   candidateEnrolled: string;
 }

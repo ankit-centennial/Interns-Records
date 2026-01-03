@@ -46,7 +46,7 @@ const EditableRow = ({ candidat, setEditCandidateId }: EditableRowProp) => {
   };
 
   return (
-    <tr>
+    <tr key={candidat._id}>
       <td>
         <input
           type="text"
