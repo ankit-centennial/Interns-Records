@@ -106,6 +106,9 @@ const AllCandidate = () => {
                   <th className="p-3">Job Posted Date</th>
                   <th className="p-3">Posted By</th>
                   <th className="p-3">Applied Date</th>
+                  <th className="p-3">Offer Letter Sent</th>
+                  <th className="p-3">Offer Letter Accepted</th>
+                  <th className="p-3">Candidate Enrolled</th>
                   <th className="p-3">Actions</th>
                 </tr>
               </thead>

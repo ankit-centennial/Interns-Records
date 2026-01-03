@@ -15,6 +15,9 @@ const AddCandidate = () => {
     jobPostedDate: "",
     appliedDate: "",
     jobPostedBy: "",
+    offerLetterSent: "",
+    offerLetterAccepted: "",
+    candidateEnrolled: ""
   });
 
   const navigate = useNavigate();

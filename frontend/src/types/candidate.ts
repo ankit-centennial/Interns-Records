@@ -9,6 +9,9 @@ export interface CandidateFormData {
   jobPostedDate: string;
   appliedDate: string;
   jobPostedBy: string;
+   offerLetterSent: string;
+  offerLetterAccepted: string;
+  candidateEnrolled: string;
 }
 
 export interface CandidatePayload {
@@ -22,6 +25,9 @@ export interface CandidatePayload {
   jobPostedDate: string;
   appliedDate: string;
   jobPostedBy: string;
+  offerLetterSent: string;
+  offerLetterAccepted: string;
+  candidateEnrolled: string;
 }
 
 export interface Candidate {
@@ -38,6 +44,9 @@ export interface Candidate {
   jobPostedDate: string;
   appliedDate: string;
   jobPostedBy: string;
+  offerLetterSent: string;
+  offerLetterAccepted: string;
+  candidateEnrolled: string;
 }
 
 export interface MessageResponse {
@@ -49,7 +58,7 @@ export interface Pagination {
   page: number;
   limit: number;
   totalPages: number;
-  search: string
+  search: string;
 }
 
 export interface CandidateListResponse {

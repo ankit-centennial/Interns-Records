@@ -18,6 +18,9 @@ const EditableRow = ({ candidat, setEditCandidateId }: EditableRowProp) => {
     jobPostedDate: candidat.jobPostedDate,
     appliedDate: candidat.appliedDate,
     jobPostedBy: candidat.jobPostedBy,
+    offerLetterSent: candidat.offerLetterSent ?? "",
+    offerLetterAccepted: candidat.offerLetterAccepted ?? "",
+    candidateEnrolled: candidat.candidateEnrolled ?? "",
   });
   const editHandleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -144,6 +147,39 @@ const EditableRow = ({ candidat, setEditCandidateId }: EditableRowProp) => {
           className="border mt-3 mr-3"
           value={editFormData.appliedDate.slice(0, 10)}
           name="appliedDate"
+          onChange={editHandleChange}
+        />
+      </td>
+
+      <td>
+        <input
+          type="text"
+          className="border mt-3 mr-3"
+          value={editFormData.offerLetterSent}
+          name="offerLetterSent"
+          placeholder=""
+          onChange={editHandleChange}
+        />
+      </td>
+
+      <td>
+        <input
+          type="text"
+          className="border mt-3 mr-3"
+          value={editFormData.offerLetterAccepted}
+          name="offerLetterAccepted"
+          placeholder=""
+          onChange={editHandleChange}
+        />
+      </td>
+
+      <td>
+        <input
+          type="text"
+          className="border mt-3 mr-3"
+          value={editFormData.candidateEnrolled}
+          name="candidateEnrolled"
+          placeholder=""
           onChange={editHandleChange}
         />
       </td>
