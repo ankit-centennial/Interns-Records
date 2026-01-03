@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Candidate from "../models/candidate";
-import { error } from "console";
 
 // Add Candidate
 export const addCandidateController = async (
@@ -81,17 +80,32 @@ export const addCandidateController = async (
 export const getCandidateController = async (req: Request, res: Response) => {
   const page = Math.max(Number(req.query.page) || 1, 1);
   const limit = Math.max(Number(req.query.limit) || 5, 1);
-  const search = req.query.search || "";
 
-  let filter = {};
+  const search = req.query.search || "";
+  const jobPostedFrom = req.query.jobPostedFrom;
+  const jobPostedTo = req.query.jobPostedTo;
+
+  let filter: any = {};
+
   if (search) {
-    filter = {
-      $or: [
-        { name: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-      ],
-    };
+    filter.$or = [
+      { name: { $regex: search, $options: "i" } },
+      { email: { $regex: search, $options: "i" } },
+    ];
   }
+
+  if (jobPostedFrom || jobPostedTo) {
+    filter.jobPostedDate = {};
+
+    if (jobPostedFrom) {
+      filter.jobPostedDate.$gte = new Date(jobPostedFrom as string);
+    }
+
+    if (jobPostedTo) {
+      filter.jobPostedDate.$lte = new Date(jobPostedTo as string);
+    }
+  }
+
   const skip = (page - 1) * limit;
 
   const candidate = await Candidate.find(filter).skip(skip).limit(limit);
