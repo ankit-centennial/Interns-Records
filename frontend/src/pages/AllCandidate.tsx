@@ -36,11 +36,7 @@ const AllCandidate = () => {
         const candidates = data?.candidate || [];
         const pagination = data?.pagination || {};
 
-        const intrestedCandidate = candidates.filter(
-          (candidate) => candidate.status !== "rejected"
-        );
-
-        setCandidates(intrestedCandidate);
+        setCandidates(candidates);
         setPagination((prev) => ({
           ...prev,
           page: Number(pagination?.page) || 1,
