@@ -24,7 +24,10 @@ const AddCandidate = () => {
     offerLetterAccepted: "",
     candidateEnrolled: "",
     fieldType: "",
-    comment: ""
+    comment: "",
+    company: "",
+    jobTitle: "",
+    interviewedBy: ""
   });
 
   const navigate = useNavigate();
@@ -58,7 +61,7 @@ const AddCandidate = () => {
       const response = await fetch(`${VITE_API_URL}/admin/check-mail?email=${formData.email.trim()}`, {
         method: "GET",
         credentials: "include",
-        
+
       });
 
 
@@ -121,6 +124,7 @@ const AddCandidate = () => {
 
           <div>
             <button
+              type="button"
               className="p-3 bg-blue-600 rounded-md text-white hover:bg-blue-500"
               onClick={checkMail}
             >Verify mail</button>
@@ -213,9 +217,53 @@ const AddCandidate = () => {
             />
           </div>
 
+          <div className="flex flex-col ">
+            <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
+              Company
+            </label>
+            <input
+              required
+              type="text"
+              placeholder="company"
+              name="company"
+              value={formData.company}
+              onChange={handleChange}
+              className="border p-2 rounded "
+            />
+          </div>
+
+          <div className="flex flex-col ">
+            <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
+              Job Title
+            </label>
+            <input
+              required
+              type="text"
+              placeholder="job title"
+              name="jobTitle"
+              value={formData.jobTitle}
+              onChange={handleChange}
+              className="border p-2 rounded "
+            />
+          </div>
+
+          <div className="flex flex-col ">
+            <label className="subpixel-antialiased text-lg font-stretch-expanded uppercase">
+              Interviewed by
+            </label>
+            <input
+              required
+              type="text"
+              placeholder="interviewed by"
+              name="interviewedBy"
+              value={formData.interviewedBy}
+              onChange={handleChange}
+              className="border p-2 rounded "
+            />
+          </div>
+
           <div className="flex lg:mt-6 w-full justify-center">
             <button
-              onClick={handleSubmit}
               type="submit"
               className="bg-cyan-600 px-6 py-3  rounded-lg text-white text-lg hover:cursor-pointer hover:bg-cyan-500"
             >

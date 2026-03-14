@@ -31,6 +31,9 @@ const EditableRow = ({
     candidateEnrolled: candidat.candidateEnrolled ?? "",
     fieldType: candidat.fieldType ?? "",
     comment: candidat.comment ?? "",
+    company: candidat.company ?? "",
+    jobTitle: candidat.jobTitle ?? "",
+    interviewedBy: candidat.interviewedBy ?? "",
   });
   const editHandleChange = (
     e: React.ChangeEvent<
@@ -141,7 +144,7 @@ const EditableRow = ({
         />
       </td> */}
 
-      
+
 
       <td>
         <select
@@ -173,7 +176,7 @@ const EditableRow = ({
         </select>
       </td>
 
-        <td>
+      <td>
         <input
           type="email"
           className="border mt-3 mr-3"
@@ -216,7 +219,7 @@ const EditableRow = ({
         />
       </td>
 
-    
+
 
       <td>
         <select

@@ -32,6 +32,9 @@ interface ICandidate {
   comment?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  company?: string;
+  jobTitle?: string;
+  interviewedBy?: string;
 }
 
 const candidateSchema = new Schema<ICandidate>(
@@ -103,6 +106,15 @@ const candidateSchema = new Schema<ICandidate>(
       enum: ["", "Part Time", "Full Time"],
     },
     comment: {
+      type: String,
+    },
+    company: {
+      type: String,
+    },
+    jobTitle: {
+      type: String,
+    },
+    interviewedBy: {
       type: String,
     },
   },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { candidateDeleteApi,candidateGetRejectedApi } from "../api/candidateApi";
+import { candidateDeleteApi, candidateGetRejectedApi } from "../api/candidateApi";
 import { type Pagination, type Candidate } from "../types/candidate";
 import Loading from "../components/Loading";
 import ReadOnlyRow from "../components/ReadOnlyRow";
@@ -56,7 +56,7 @@ const RejectedCandidates = () => {
     fetchCandidate();
   }, [page, search, limit, jobPostedFrom]);
 
-  
+
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
@@ -99,10 +99,10 @@ const RejectedCandidates = () => {
               </button>
             </Link>
             <h2 className="text-xl font-semibold text-gray-800">
-                Rejected Candidates
-              
+              Rejected Candidates
+
             </h2>
-            
+
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
             {/* Search */}
@@ -172,13 +172,15 @@ const RejectedCandidates = () => {
                   <th className="p-3">Offer Letter Sent</th>
                   <th className="p-3">Offer Letter Accepted</th>
                   <th className="p-3">Candidate Enrolled</th>
-                  
+
                   <th className="p-3">LinkedIn Profile</th>
                   <th className="p-3">LinkedIn URL</th>
                   <th className="p-3">Job Board</th>
                   <th className="p-3">Job Posted Date</th>
                   <th className="p-3">Posted By</th>
                   <th className="p-3">Applied Date</th>
+                  <th className="p-3">Company</th>
+                  <th className="p-3">Job Title</th>
                   <th className="p-3">Interviewed By</th>
                 </tr>
               </thead>
@@ -186,7 +188,7 @@ const RejectedCandidates = () => {
               <tbody>
                 {candidates?.length > 0 ? (
                   candidates.map((candidate) =>
-                    (
+                  (
                     <React.Fragment key={candidate._id}>
                       {editCandidateId === candidate._id ? (
                         <EditableRow

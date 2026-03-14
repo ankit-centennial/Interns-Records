@@ -29,6 +29,9 @@ export const addCandidateController = async (
       candidateEnrolled,
       fieldType,
       comment,
+      company,
+      jobTitle,
+      interviewedBy,
     } = req.body;
 
     if (
@@ -72,6 +75,9 @@ export const addCandidateController = async (
       candidateEnrolled,
       fieldType,
       comment,
+      company,
+      jobTitle,
+      interviewedBy,
     });
 
     res
@@ -149,7 +155,7 @@ export const getRejectedCandidateController = async (req: Request, res: Response
   const jobPostedTo = req.query.jobPostedTo;
 
   let filter: any = {
-    status:  "rejected",
+    status: "rejected",
   };
 
   if (search) {
@@ -237,6 +243,9 @@ export const updateCandidateController = async (
       candidateEnrolled,
       fieldType,
       comment,
+      company,
+      jobTitle,
+      interviewedBy,
     } = req.body;
 
     const candidate = {
@@ -258,6 +267,9 @@ export const updateCandidateController = async (
       candidateEnrolled,
       fieldType,
       comment,
+      company,
+      jobTitle,
+      interviewedBy,
     };
 
     const updateCandidate = await Candidate.findByIdAndUpdate(id, candidate, {

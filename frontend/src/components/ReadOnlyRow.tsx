@@ -31,10 +31,10 @@ const ReadOnlyRow = ({ candidate, onDelete, onEdit }: ReadOnlyRowProps) => {
       <td className="p-3">
         {candidate.joiningDate && !isNaN(Date.parse(candidate.joiningDate))
           ? new Date(candidate.joiningDate).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
           : "N/A"}
       </td>
       {/* <td className="p-3">{`${
@@ -42,16 +42,16 @@ const ReadOnlyRow = ({ candidate, onDelete, onEdit }: ReadOnlyRowProps) => {
           ? "pending..."
           : candidate.linkedInAge + "year"
       }`}</td> */}
-      
+
       <td className="p-3">{candidate?.fieldType || "Pending..."}</td>
       <td className="p-3">{candidate.duration || "N/A"}</td>
-      
+
       <td className="p-3">{candidate.email}</td>
       <td className="p-3">{candidate?.offerLetterSent || "Pending..."}</td>
       <td className="p-3">{candidate?.offerLetterAccepted || "Pending..."}</td>
       <td className="p-3">{candidate?.candidateEnrolled || "Pending..."}</td>
 
-      
+
 
       <td className="p-3">{candidate?.linkedInProfile || "Pending..."}</td>
 
@@ -63,10 +63,10 @@ const ReadOnlyRow = ({ candidate, onDelete, onEdit }: ReadOnlyRowProps) => {
       <td className="p-3">
         {candidate.jobPostedDate && !isNaN(Date.parse(candidate.jobPostedDate))
           ? new Date(candidate.jobPostedDate).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
           : "N/A"}
       </td>
 
@@ -75,12 +75,15 @@ const ReadOnlyRow = ({ candidate, onDelete, onEdit }: ReadOnlyRowProps) => {
       <td className="p-3">
         {candidate.appliedDate && !isNaN(Date.parse(candidate.appliedDate))
           ? new Date(candidate.appliedDate).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
           : "N/A"}
       </td>
+      <td className="p-3">{candidate.company || "N/A"}</td>
+      <td className="p-3">{candidate.jobTitle || "N/A"}</td>
+      <td className="p-3">{candidate.interviewedBy || "N/A"}</td>
       {/* <td className="p-3">{candidate.interviewedBy}</td> */}
     </tr>
   );

@@ -1,4 +1,4 @@
-import api from "./axios.ts"; // your axios instance
+import api from "./axios.ts";
 import type {
   CandidateListResponse,
   CandidatePayload,
